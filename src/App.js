@@ -26,13 +26,14 @@ export default function App() {
 function Accordion() {
   return (
     <div className="accordion">
-      <AccordionItem />
-      <AccordionItem />
+      {faqs.map((data, i) => (
+        <AccordionItem key={i} data={data} num={i} />
+      ))}
     </div>
   );
 }
 
-function AccordionItem() {
+function AccordionItem({ data, num }) {
   const [isOpen, setIsOpen] = useState(false);
   const handleToggle = () => {
     setIsOpen((prevIsOpen) => !prevIsOpen);
@@ -40,24 +41,20 @@ function AccordionItem() {
   return (
     <div className={`item ${isOpen ? "open" : ""}`}>
       {" "}
-      <span className="number" onClick={handleToggle}>
-        01
-      </span>
-      <span className="title text" onClick={handleToggle}>
-        Where are these chairs assembled?
-      </span>
-      <span className="icon" onClick={handleToggle}>
+      <p className="number" onClick={handleToggle}>
+        {`${num + 1}`.padStart(2, "0")}
+      </p>
+      <p className="title text" onClick={handleToggle}>
+        {data.title}
+      </p>
+      <p className="icon" onClick={handleToggle}>
         {" "}
         {isOpen ? "-" : "+"}
-      </span>
+      </p>
       {isOpen && (
         <div className="content-box">
           <ul>
-            <li>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-              Accusantium, quaerat temporibus quas dolore provident nisi ut
-              aliquid ratione beatae sequi aspernatur veniam repellendus.
-            </li>
+            <li>{data.text}</li>
           </ul>
         </div>
       )}
