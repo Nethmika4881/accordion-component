@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const faqs = [
   {
     title: "Where are these chairs assembled?",
@@ -31,21 +33,34 @@ function Accordion() {
 }
 
 function AccordionItem() {
+  const [isOpen, setIsOpen] = useState(false);
+  const handleToggle = () => {
+    setIsOpen((prevIsOpen) => !prevIsOpen);
+  };
   return (
-    <div className="item open">
+    <div className={`item ${isOpen ? "open" : ""}`}>
       {" "}
-      <span className="number">01</span>
-      <span className="title text">Where are these chairs assembled?</span>
-      <span className="icon">&minus;</span>
-      <div className="content-box">
-        <ul>
-          <li>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-            Accusantium, quaerat temporibus quas dolore provident nisi ut
-            aliquid ratione beatae sequi aspernatur veniam repellendus.
-          </li>
-        </ul>
-      </div>
+      <span className="number" onClick={handleToggle}>
+        01
+      </span>
+      <span className="title text" onClick={handleToggle}>
+        Where are these chairs assembled?
+      </span>
+      <span className="icon" onClick={handleToggle}>
+        {" "}
+        {isOpen ? "-" : "+"}
+      </span>
+      {isOpen && (
+        <div className="content-box">
+          <ul>
+            <li>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+              Accusantium, quaerat temporibus quas dolore provident nisi ut
+              aliquid ratione beatae sequi aspernatur veniam repellendus.
+            </li>
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
